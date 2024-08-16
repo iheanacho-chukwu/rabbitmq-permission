@@ -1,0 +1,9 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Vhost
+metadata:
+  name: transactionrequest # name of this custom resource
+  namespace: rabbitmq-bvt
+spec:
+  name: transactionrequest # name of vhost
+  rabbitmqClusterReference:
+    name: bvt-rabbitmqcluster

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: transactionrequest-creds
+  namespace: rabbitmq-bvt
+type: Opaque
+stringData:
+  username: transactionrequest
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: transactionrequest
+  namespace: rabbitmq-bvt
+spec:
+  # tags:
+  # - management
+  rabbitmqClusterReference:
+    name: bvt-rabbitmqcluster
+  importCredentialsSecret:
+    name: transactionrequest-creds
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: transactionrequest-permission
+  namespace: rabbitmq-bvt
+spec:
+  vhost: "transactionrequest"
+  user: "transactionrequest"
+  permissions:
+    configure: ".*"  #"^$"
+    write: ".*"
+    read: ".*"
+  rabbitmqClusterReference:
+    name: bvt-rabbitmqcluster

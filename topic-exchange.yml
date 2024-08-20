@@ -1,0 +1,28 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Exchange
+metadata:
+  name: transactionrequest
+  namespace: rabbitmq-bvt
+spec:
+  name: transactionrequest
+  type: topic
+  vhost: "transactionrequest"
+  durable: true
+  autoDelete: false
+  rabbitmqClusterReference:
+    name: bvt-rabbitmqcluster
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: TopicPermission
+metadata:
+  name: transactionrequest
+spec:
+  vhost: "transactionrequest" # name of a vhost; required
+  userReference:
+    name: "transactionrequest" # name of a user.rabbitmq.com in the same namespace; must specify either spec.userReference or spec.user
+  permissions:
+    exchange: "transactionrequest"
+    write: ".*"
+    read: ".*"
+  rabbitmqClusterReference:
+    name: bvt-rabbitmqcluster

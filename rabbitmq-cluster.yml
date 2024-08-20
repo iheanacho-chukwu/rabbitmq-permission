@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rabbitmq-bvt
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: bvt-rabbitmqcluster
+  namespace: rabbitmq-bvt
+  labels:
+    app: rabbitmq-bvt
+    version: 1.0.0
+spec:
+  replicas: 2
+  service:
+    type: LoadBalancer  # This sets the service type to LoadBalancer
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  rabbitmq:
+    additionalConfig: |
+      log.console.level = info
+      channel_max = 1700
+      default_user_tags.administrator = true

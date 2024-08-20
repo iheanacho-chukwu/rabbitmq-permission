@@ -1,0 +1,15 @@
+#https://www.rabbitmq.com/kubernetes/operator/using-topology-operator#queues-policies
+#https://www.rabbitmq.com/docs/queues
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: transactionrequest
+  namespace: rabbitmq-bvt
+spec:
+  name: "transactionrequest"
+  vhost: "/transactionrequest"
+  type: quorum
+  durable: true
+  autoDelete: false
+  rabbitmqClusterReference:
+    name: bvt-rabbitmqcluster

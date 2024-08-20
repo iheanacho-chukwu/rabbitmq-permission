@@ -1,11 +1,13 @@
+#https://www.rabbitmq.com/kubernetes/operator/using-topology-operator#users-permissions
 apiVersion: v1
 kind: Secret
 metadata:
-  name: transactionrequest-creds
+  name: transactionrequest-creds   #creates a secret USERNAME-user-credentials 
   namespace: rabbitmq-bvt
 type: Opaque
 stringData:
   username: transactionrequest
+  password: whyareyoulookinghere #generates a password if not provided
 ---
 apiVersion: rabbitmq.com/v1beta1
 kind: User
@@ -13,8 +15,8 @@ metadata:
   name: transactionrequest
   namespace: rabbitmq-bvt
 spec:
-  # tags:
-  # - management
+  tags:
+  - management
   rabbitmqClusterReference:
     name: bvt-rabbitmqcluster
   importCredentialsSecret:
